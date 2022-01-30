@@ -1,0 +1,24 @@
+{
+  "files": {
+    "packages/interfaces/.eslintrc.js": "260be09b3b19f68a065c94c0c3e1dd7061ab7c5e",
+    "packages/interfaces/LICENSE": "a604c0b5fb93eceab6042f4fafc8fd463bf08825",
+    "packages/interfaces/README.md": "a3f30e5136bef03a2fd99ec02cd19bb9ec76297b",
+    "packages/interfaces/package.json": "ce9cb03f940c40cd7b6d85ea4b6c6f0931044e22",
+    "packages/interfaces/src/index.ts": "59d9183ac922f8fe5b7556622b833b4a62c4ad64",
+    "packages/interfaces/src/interfaces/adapter.serialized.ts": "0b3770189993703e61588efb3780a6dab5c4a6cc",
+    "packages/interfaces/src/interfaces/adapter.ts": "a429af3a2285016d464557a3943e3663844a752a",
+    "packages/interfaces/src/interfaces/exception.ts": "abdc7c548a3aaf12eb2967724d58d1a0ba186d86",
+    "packages/interfaces/src/interfaces/provider.ts": "8d132432b1b2cae0d325adb3471b53df272bce0d",
+    "packages/interfaces/src/interfaces/request.ts": "492773e75e9c37db7c647fd283441f6725e59cf8",
+    "packages/interfaces/src/interfaces/response.ts": "fba920f4b012553114a8b4cb8c4a85a58a8dd692",
+    "packages/interfaces/src/interfaces/server.config.ts": "77952fda6cbf3c49bba352acf7a4cf99c8da7931",
+    "packages/interfaces/src/interfaces/server.ts": "4ee9bd0a6fdb2e2b2ec0aff5ba96d6cb4a01ff3c",
+    "packages/interfaces/src/interfaces/vanilla.request.ts": "e6d71590689ee712eb342bb461dcc7a5a7fd3677",
+    "packages/interfaces/src/types/ClassType.ts": "87e39bc02e87a68841b665c60314452252a22632",
+    "packages/interfaces/src/types/middleware.ts": "bf9865159c9592f33442037e8e9e2b2d40fe7538",
+    "packages/interfaces/tsconfig.json": "0083e266c67d18926235fbdee4dd1bb105593d2d",
+    "packages/interfaces/tsup.config.ts": "07977b309860951716095a2962eca7103f12df94",
+    "packages/interfaces/.rush/temp/shrinkwrap-deps.json": "3996ae056df8966405d1037ebc874093e7f09ee6"
+  },
+  "arguments": "tsup "
+}
