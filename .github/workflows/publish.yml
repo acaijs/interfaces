@@ -86,7 +86,7 @@ jobs:
         with:
           file-path: 'package.json'
           commit-msg: '[actions] ${{ github.event.release.tag }} version'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.WORKFLOW_TOKEN }}
   
   wrapup:
     name: Publish package
@@ -102,4 +102,4 @@ jobs:
           type: now
           from_branch: development
           target_branch: production
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.WORKFLOW_TOKEN }}
