@@ -14,6 +14,8 @@ jobs:
           CONTRIB_REPOSITORY: ${{ github.repository }}
           CONTRIB_OUTPUT_FILE: 'CONTRIBUTORS.md'
 
+      - run: echo "$(<filename)"
+
       - name: Commit changes
         uses: test-room-7/action-update-file@v1
         with:
