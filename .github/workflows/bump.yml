@@ -1,0 +1,19 @@
+name: 'Bump dependants'
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  spread:
+    name: Trigger updates
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dependants: ["router"]
+    steps:
+      - uses: undergroundwires/bump-everywhere@1.3.1
+        with:
+          repository: 'acaijs/${{ matrix.dependants }}'
+          git-token: ${{ secrets.WORKFLOW_TOKEN }}
+          release-token: ${{ secrets.WORKFLOW_TOKEN }}
