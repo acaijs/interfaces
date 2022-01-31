@@ -11,7 +11,7 @@ jobs:
       - uses: minicli/action-contributors@v3
         name: "Update a projects CONTRIBUTORS file"
         env:
-          CONTRIB_REPOSITORY: ${{ github.event.repository.name }}
+          CONTRIB_REPOSITORY: ${{ github.repository }}
           CONTRIB_OUTPUT_FILE: 'CONTRIBUTORS.md'
 
       - name: Commit changes
