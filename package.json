@@ -4,7 +4,7 @@
 	"description": "General use typescript interfaces for use across all the Açaí modules.",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/AcaiJS/modules.git",
+		"url": "git+https://github.com/acaijs/interfaces.git",
 		"directory": "packages/interfaces"
 	},
 	"author": "Rafael <rafael.correa@aposoftworks.com>",
@@ -13,7 +13,7 @@
 		"typescript",
 		"interfaces",
 		"types",
-		"acai",
+		"acaijs",
 		"modules"
 	],
 	"typesVersions": {
