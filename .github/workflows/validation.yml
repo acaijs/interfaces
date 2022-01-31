@@ -34,6 +34,9 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+
+      - name: Download dependencies
+        run: yarn
           
       - run: yarn audit
 
@@ -97,6 +100,9 @@ jobs:
           key: ${{ runner.os }}-${{ env.cache-name }}
           restore-keys: ${{ runner.os }}-${{ env.cache-name }}
 
+      - name: Download dependencies
+        run: yarn
+
       - run: yarn build
 
   test:
@@ -112,6 +118,9 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+
+      - name: Download dependencies
+        run: yarn
 
       - name: Cache build
         id: cacheBuild

@@ -34,6 +34,19 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+
+      - name: Cache build
+        id: cacheBuild
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-build
+        with:
+          path: ./packages/**/dist
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
+
+      - name: Download dependencies
+        run: yarn
           
       - name: Build package
         run: yarn build
@@ -51,6 +64,19 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+
+      - name: Cache build
+        id: cacheBuild
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-build
+        with:
+          path: ./packages/**/dist
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
+
+      - name: Download dependencies
+        run: yarn
       
       - name: Publish
         run: yarn publish --new-version ${{ github.event.release.tag }} --access public
