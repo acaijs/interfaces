@@ -16,6 +16,7 @@ jobs:
       - name: Commit changes
         uses: test-room-7/action-update-file@v1
         with:
+          branch: ${{ secrets.GITHUB_REF_NAME }}
           file-path: 'CONTRIBUTORS.md'
           commit-msg: '[actions] update contributors'
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
