@@ -55,6 +55,7 @@ jobs:
     name: Publish package
     needs: [build]
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -79,7 +80,9 @@ jobs:
         run: yarn
       
       - name: Publish
-        run: yarn publish --new-version ${{ github.event.release.name }} --access public
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Update package version
         uses: test-room-7/action-update-file@v1
