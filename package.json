@@ -38,7 +38,7 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint --quiet **/* --fix",
 		"prepublishOnly": "yarn build",
-		"test": "",
+		"test": "echo \"Tests to be implemented\"",
 		"audit": "yarn audit"
 	},
 	"engines": {
