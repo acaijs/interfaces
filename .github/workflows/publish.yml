@@ -79,13 +79,13 @@ jobs:
         run: yarn
       
       - name: Publish
-        run: yarn publish --new-version ${{ github.event.release.tag_name }} --access public
+        run: yarn publish --new-version ${{ github.event.release.name }} --access public
 
       - name: Update package version
         uses: test-room-7/action-update-file@v1
         with:
           file-path: 'package.json'
-          commit-msg: '[actions] ${{ github.event.release.tag }} version'
+          commit-msg: '[actions] ${{ github.event.release.name }} version'
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
   
   wrapup:
