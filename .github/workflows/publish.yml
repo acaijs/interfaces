@@ -1,8 +1,8 @@
 name: 'Publish'
 
 on:
-  push:
-    branches: [ development ]
+  release:
+    types: [ published ]
 
 jobs:
   setup:
@@ -12,33 +12,68 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
 
-  publish:
-    name: Verify version bump
+      - name: Download dependencies
+        run: yarn
+
+  build:
+    name: Build package
     needs: [setup]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
-
-      - name: Cache builds
-        id: cacheBuilds
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-builds
+      - name: Prepare node
+        uses: actions/setup-node@v2
         with:
-          path: ./packages/**/dist
-          key: ${{ runner.os }}-${{ env.cache-name }}
-          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
+          node-version: 16
+          cache: 'yarn'
           
-      - name: Publish changes
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          COMMIT: ${{ github.sha }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node common/scripts/install-run-rush.js publish:new
+      - name: Build package
+        run: yarn build
+
+  publish:
+    name: Publish package
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+      
+      - name: Publish
+        run: yarn publish --new-version ${{ github.event.release.tag }} --access public
+
+      - name: Update package version
+        uses: test-room-7/action-update-file@v1
+        with:
+          file-path: 'package.json'
+          commit-msg: '[actions] ${{ github.event.release.tag }} version'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  
+  wrapup:
+    name: Publish package
+    needs: [publish]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Merge to production
+        uses: devsmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: development
+          target_branch: production
+          github_token: ${{ secrets.GITHUB_TOKEN }}
