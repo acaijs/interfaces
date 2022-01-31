@@ -1,5 +1,5 @@
 {
-	"extends": "../preset/tsconfig.json",
+	"extends": "@acai/preset/tsconfig.json",
 	"include": [
 		"src/**/*",
 		"src/index.ts"

@@ -1,9 +1,8 @@
 name: Update CONTRIBUTORS file
 
 on:
-  schedule:
-    - cron: "0 0 1 * *"
-  workflow_dispatch:
+  push:
+    branches: [ development ]
 
 jobs:
   main:
@@ -12,11 +11,11 @@ jobs:
       - uses: minicli/action-contributors@v3
         name: "Update a projects CONTRIBUTORS file"
         env:
-          CONTRIB_REPOSITORY: 'AcaiJS/modules'
+          CONTRIB_REPOSITORY: ${{ GITHUB_REPOSITORY }}
           CONTRIB_OUTPUT_FILE: 'CONTRIBUTORS.md'
       - name: Commit changes
         uses: test-room-7/action-update-file@v1
         with:
           file-path: 'CONTRIBUTORS.md'
-          commit-msg: Update Contributors
+          commit-msg: '[actions] update contributors'
           github-token: ${{ secrets.GITHUB_TOKEN }}

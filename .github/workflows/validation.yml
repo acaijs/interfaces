@@ -12,8 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Download dependencies
+        run: yarn
 
   audit:
     name: Audit for vulnerabilities
@@ -23,10 +29,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Download dependencies
+        run: yarn
           
-      - run: node common/scripts/install-run-rush.js audit
+      - run: yarn audit
 
   lint:
     name: Lint code for standarlization
@@ -36,14 +48,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Download dependencies
+        run: yarn
           
-      - run: node common/scripts/install-run-rush.js lint
+      - run: yarn lint
 
   analyze:
     name: Analyze code for vulnerabilities
-    needs: setup
     runs-on: ubuntu-latest
 
     steps:
@@ -70,22 +87,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Cache builds
-        id: cacheBuilds
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Cache build
+        id: cacheBuild
         uses: actions/cache@v2
         env:
-          cache-name: cache-builds
+          cache-name: cache-build
         with:
-          path: ./packages/**/dist
+          path: ./dist
           key: ${{ runner.os }}-${{ env.cache-name }}
           restore-keys: ${{ runner.os }}-${{ env.cache-name }}
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
-        with:
-          build: true
+      - name: Download dependencies
+        run: yarn
 
-  test_1:
+      - run: yarn build
+
+  test:
     name: Test general packages
     needs: build
     runs-on: ubuntu-latest
@@ -93,80 +116,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
 
-      - name: Cache builds
-        id: cacheBuilds
+      - name: Download dependencies
+        run: yarn
+
+      - name: Cache build
+        id: cacheBuild
         uses: actions/cache@v2
         env:
-          cache-name: cache-builds
+          cache-name: cache-build
         with:
           path: ./packages/**/dist
           key: ${{ runner.os }}-${{ env.cache-name }}
           restore-keys: ${{ runner.os }}-${{ env.cache-name }}
           
       - name: Test
-        run: node common/scripts/install-run-rush.js test
-
-  test_2:
-    name: Test database packages
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
-
-      - name: Cache builds
-        id: cacheBuilds
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-builds
-        with:
-          path: ./packages/**/dist
-          key: ${{ runner.os }}-${{ env.cache-name }}
-          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
-          
-      - uses: getong/mariadb-action@v1.1
-        with:
-          mysql user: ${{ secrets.DATABASE_USER }}
-          mysql password: ${{ secrets.DATABASE_PASSWORD }}
-          mysql database: acai_query
-          
-      - run: echo 'implement database tests'
-
-  verify_publish:
-    name: Verify version bump
-    needs: [test_1, test_2]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Rush Install
-        uses: advancedcsg-open/actions-rush@v1.4.5
-
-      - name: Cache builds
-        id: cacheBuilds
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-builds
-        with:
-          path: ./packages/**/dist
-          key: ${{ runner.os }}-${{ env.cache-name }}
-          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
-          
-      - name: Verify changes
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          PULL_REQUEST: ${{ github.event.number }}
-        run: node common/scripts/install-run-rush.js verify
-          
-      - name: Verify publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          PULL_REQUEST: ${{ github.event.number }}
-        run: node common/scripts/install-run-rush.js duplicate
+        run: yarn test
