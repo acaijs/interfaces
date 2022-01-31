@@ -80,13 +80,13 @@ jobs:
       
       - name: Publish
         env:
-          RELEASE: ${{ github.event.release.body }}
+          RELEASE: ${{ github.event.release.title }}
         run: yarn publish --new-version $RELEASE --access public
 
       - name: Update package version
         uses: test-room-7/action-update-file@v1
         env:
-          RELEASE: ${{ github.event.release.body }}
+          RELEASE: ${{ github.event.release.title }}
         with:
           file-path: 'package.json'
           commit-msg: '[actions] $RELEASE version'
