@@ -79,7 +79,7 @@ jobs:
         run: yarn
       
       - name: Publish
-        run: yarn publish --new-version ${{ github.event.release.tag }} --access public
+        run: yarn publish --new-version ${{ github.event.release.tag_name }} --access public
 
       - name: Update package version
         uses: test-room-7/action-update-file@v1
@@ -89,7 +89,7 @@ jobs:
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
   
   wrapup:
-    name: Publish package
+    name: Wrap publish
     needs: [publish]
     runs-on: ubuntu-latest
     steps:
