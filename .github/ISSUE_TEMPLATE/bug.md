@@ -7,8 +7,7 @@ assignees: ''
 ---
 
 <!--
-1. When creating the issue, add a tag to the title that refers to the package you are refering, such as: [server] or [query]
-2. Make the title imperative and direct
+Make the title imperative and direct
 -->
 
 # Summary
@@ -38,7 +37,6 @@ Actual result that was given by the reproduction
 # General
 | Question | Answer |
 | --- | --- |
-| package that causes the bug | <!-- server/query/etc --> |
 | version of the package | <!-- X.Y.Z --> |
 | operating system | <!-- zorin/ubuntu(linux), windows (pro, etc), Mac (version) --> |
 | node version | <!-- X.Y.Z (use node -v) --> |
